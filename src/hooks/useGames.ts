@@ -13,6 +13,7 @@ export  interface Game {
   background_image: string;
   // 整个对象是数组 但是我们只需要里面的platform 因为只是定义了platform的泛型Platform
   parent_platforms: {platform: Platform}[];
+  metacritic: number;
 }
 
 interface FetchGamesResponse {
