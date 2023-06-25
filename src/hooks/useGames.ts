@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
+
+export interface Platform{
+    id: number;
+    name: string;
+    slug: string;
+}
 export  interface Game {
   id: number;
   name: string;
   background_image: string;
+  // 整个对象是数组 但是我们只需要里面的platform 因为只是定义了platform的泛型Platform
+  parent_platforms: {platform: Platform}[];
 }
 
 interface FetchGamesResponse {
