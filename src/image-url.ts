@@ -6,6 +6,7 @@ const getCroppedImageUrl =(url:string)=>{
     //https://media.rawg.io/media/
     // url.slice(0, index) 将返回从字符串 url 的起始位置到 index 之前的部分字符串。这样可以截取 url 字符串中 "media/" 之前的部分。
     // url.slice(index) 是一个 JavaScript 代码片段，用于从字符串 url 中提取从 index 位置到字符串末尾的部分字符串。
+    if(!url) return '';//如果url不存在就返回空字符串
     const target = "media/";
     const index =url.indexOf(target)+target.length;
    return url.slice(0,index)+'crop/600/400/'+url.slice(index);   

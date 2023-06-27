@@ -10,6 +10,8 @@ interface Props {
   gameQuery: GameQuery | null;
   // selectedGenre: Genre | null;
   // selectedPlatform: Platform | null;
+  // selectedSortOrder: string;
+  
 }
 
 const GameGrid = ({ gameQuery }: Props) => {
