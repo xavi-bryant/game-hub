@@ -21,13 +21,20 @@ export interface Game {
 
 // 通过game 中的genres 的id  和选中的id 相等 来过滤
 const useGames = (
-  gameQuery:GameQuery | null
+  gameQuery: GameQuery | null
   // selectedGenre: Genre | null,
   // selectedPlatform: Platform | null
 ) =>
   useData<Game>(
     "/games",
-    { params: { genres: gameQuery?.genre?.id, platforms: gameQuery?.platform?.id ,ordering:gameQuery?.sortOrder} },
+    {
+      params: {
+        genres: gameQuery?.genre?.id,
+        platforms: gameQuery?.platform?.id,
+        ordering: gameQuery?.sortOrder,
+        search: gameQuery?.searchText,
+      },
+    },
     // [selectedGenre?.id, selectedPlatform?.id]
     [gameQuery]
   );

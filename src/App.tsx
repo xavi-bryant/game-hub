@@ -12,6 +12,7 @@ export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
   sortOrder:string;
+  searchText:string
 }
 function App() {
   // 根据genre 过滤 渲染game列表  表示选中的genre
@@ -34,7 +35,7 @@ function App() {
         }}
       >
         <GridItem area="nav">
-          <NavBar />
+          <NavBar onSearch={(searchText)=>setGameQuery({...gameQuery,searchText})}/>
         </GridItem>
         <Show above="lg">
           <GridItem area="aside" px={5}>
