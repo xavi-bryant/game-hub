@@ -17,6 +17,7 @@ export interface Game {
   // 整个对象是数组 但是我们只需要里面的platform 因为只是定义了platform的泛型Platform
   parent_platforms: { platform: Platform }[];
   metacritic: number;
+  rating_top: number;
 }
 
 // 通过game 中的genres 的id  和选中的id 相等 来过滤
