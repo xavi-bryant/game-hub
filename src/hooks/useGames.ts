@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
+import { Genre } from "./useGenres";
+import useData from "./useData";
 
 export interface Platform {
   id: number;
@@ -16,35 +18,7 @@ export interface Game {
   metacritic: number;
 }
 
-interface FetchGamesResponse {
-  count: number;
-  results: Game[];
-}
-const useGames = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  // 取消 请求 controller
-  useEffect(() => {
-    const controller = new AbortController();
-    setLoading(true);
-    apiClient
-      .get<FetchGamesResponse>("/games", { signal: controller.signal })
-      .then((res) => {
-        setLoading(false);
-        setGames(res.data.results);
-      })
-      .catch((err) => {
-        // 如果这个err 是 CanceledError 就不要处理了
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-        setLoading(false);
-      });
-    // 返回一个函数，这个函数会在组件卸载的时候执行  中止该控制器关联的任何挂起的请求
-    return () => controller.abort();
-  }, []);
-
-  return { games, error,loading };
-};
+// 通过game 中的genres 的id  和选中的id 相等 来过滤
+const useGames = (selectedGenre:Genre | null)=>useData<Game>("/games",{params:{genres:selectedGenre?.id}},[selectedGenre?.id]);
 
 export default useGames;

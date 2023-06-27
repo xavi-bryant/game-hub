@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import apiClient from "../services/api-client";
-import { CanceledError } from "axios";
+import { AxiosRequestConfig, CanceledError } from "axios";
 
 
 interface FetchResponse<T> {
@@ -10,7 +10,7 @@ interface FetchResponse<T> {
   results: T[];
 }
 
-const useData =<T>(endpoint:string) => {
+const useData =<T>(endpoint:string,requestConfig?:AxiosRequestConfig,deps?:any[]) => {
   const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ const useData =<T>(endpoint:string) => {
     const controller = new AbortController();
     setLoading(true);
     apiClient
-      .get<FetchResponse<T>>(endpoint, { signal: controller.signal })
+      .get<FetchResponse<T>>(endpoint, { signal: controller.signal ,...requestConfig})
       .then((res) => {
         setLoading(false);
         setData(res.data.results);
@@ -32,7 +32,7 @@ const useData =<T>(endpoint:string) => {
       });
     // 返回一个函数，这个函数会在组件卸载的时候执行  中止该控制器关联的任何挂起的请求
     return () => controller.abort();
-  }, []);
+  }, deps ? [...deps]:[]);
 
   return { data, error, loading };
 };
