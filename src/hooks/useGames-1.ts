@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
-import { Genre } from "./useGenres";
+// import { Genre } from "./useGenres";
 
 export interface Platform {
   id: number;
@@ -21,7 +21,7 @@ interface FetchGamesResponse {
   count: number;
   results: Game[];
 }
-const useGames = (selectedGenre:Genre | null) => {
+const useGames = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
